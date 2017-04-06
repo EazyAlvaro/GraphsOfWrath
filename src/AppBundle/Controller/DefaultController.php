@@ -20,6 +20,8 @@ class DefaultController extends Controller {
         $scraper->setURL($url);
         $scraper->load();
         $scraper->start();
+        
+        return NULL;
 
     }
 

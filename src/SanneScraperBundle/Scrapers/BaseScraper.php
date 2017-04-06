@@ -127,7 +127,7 @@ class BaseScraper {
      * @param type $database
      * @todo error handling
      */
-    public function setDB($host= ' localhost', $username = 'root', $password = null, $database = 'stats') {  
+    protected function setDB($host= ' localhost', $username = 'root', $password = null, $database = 'stats') {  
         $this->i = new mysqli($host, $username, $password, $database );
     }
     

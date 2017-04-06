@@ -147,7 +147,7 @@ class SanneScraper extends BaseScraper{
             $year = $matches[0];
 
             //bepaal de bestandsnaam van de grafiekafbeelding
-            $filename = "img/" . $type . "_" . $year . ".png";
+            $filename = "img/sanne/" . $type . "_" . $year . ".png";
 
             $ydata = $this->scrapeYData($dom);
 
