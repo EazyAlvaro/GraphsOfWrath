@@ -9,6 +9,15 @@ use SanneScraperBundle\Scrapers\SanneScraper;
 class DefaultController extends Controller
 {
     /**
+     * @Route("/")
+     */
+    public function indexAction()
+    {
+        return $this->render('SanneScraperBundle:Default:index.html.twig');
+    }
+    
+    
+    /**
      * @Route("/generate")
      */
     public function generateAction()
