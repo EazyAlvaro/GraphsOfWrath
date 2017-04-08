@@ -42,9 +42,6 @@
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "^2.0",
         "amenadiel/jpgraph": "3.6.8",
-        "braincrafted/bootstrap-bundle": "~2.0",
-        "twbs/bootstrap": "3.0.*",
-        "jquery/jquery":  "1.11.*",
         "symfony/assetic-bundle": "^2.8"
     },
     "require-dev": {
