@@ -6,17 +6,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use SanneScraperBundle\Scrapers\SanneScraper;
 
-class DefaultController extends Controller
-{
+class DefaultController extends Controller {
+
     /**
      * @Route("/")
      */
     public function indexAction()
     {
-        return $this->render('SanneScraperBundle:Default:index.html.twig');
+        return $this->render('SanneScraperBundle:Default:stats.html.twig');
     }
-    
-    
+
     /**
      * @Route("/generate")
      */
@@ -29,17 +28,24 @@ class DefaultController extends Controller
         $scraper->setURL($url);
         $scraper->load();
         $scraper->start();
-        
-        return $this->render('SanneScraperBundle:Default:index.html.twig');
+
+        return $this->render('SanneScraperBundle:Default:generate.html.twig');
     }
-    
-    
-      /**
+
+    /**
+     * @route("test")
+     */
+    public function testAction()
+    {
+        return $this->render('SanneScraperBundle:Default:generate.html.twig');
+    }
+
+    /**
      * @Route("/stats")
      */
     public function statsAction()
     {
         return $this->render('SanneScraperBundle:Default:stats.html.twig');
     }
-    
+
 }
