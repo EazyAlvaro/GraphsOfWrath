@@ -4,7 +4,6 @@ namespace SanneScraperBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use SanneScraperBundle\Scrapers\SanneScraper;
 
 class DefaultController extends Controller {
 
@@ -27,7 +26,7 @@ class DefaultController extends Controller {
         // clean out the old data before crawling
         $em->createQuery('DELETE FROM SanneScraperBundle:Statistic')->execute();
                 
-        $scraper = new SanneScraper($em);
+        $scraper = $this->get('sanne.scraper');
         $scraper->setURL($url);
         $scraper->load();
         $scraper->start();

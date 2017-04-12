@@ -6,22 +6,39 @@ use \Exception as Exception;
 use SanneScraperBundle\Services\GraphService;
 use DOMDocument;
 use SanneScraperBundle\Entity\Statistic;
+use Doctrine\ORM\EntityManager;
 
+
+/**
+ * This service crawls the target site (intende use, a specific listography page)
+ * to scrape data, save it in the DB, and generate graph images from that data.
+ * 
+ * @todo actually save the graph data, now we only save data on the stored asset
+ */
 class SanneScraper extends BaseScraper{ 
     private $urlArr =  array(); // URL's die uit de targetURL zijn gescraped
     private $domArr = array();  // DOM objecten die daar weer uit gescraped zijn.
     
     /**
-     * Doctrine Entity managrer, the dirty way  until i refactor to clean symfony servicesj
-     * @var type 
+     * @var EntityManager Doctrine Entity Manager
      */
-    private $em; // 
+    private $em; 
     
-    function __construct($em = null) {
-       $this->em = $em;
+    /**
+     * @var GraphService 
+     */
+    private $graph;
+
+    /**
+     * @todo look into ContainerAwareInterface and ContainerAwareTrait
+     * @param \Doctrine\ORM\EntityManager $em
+     * @param GraphService $graph
+     */
+    function __construct(EntityManager $em = null, GraphService $graph = null) {
+        $this->em = $em;
+        $this->graph = $graph;
     }
     
-   
     /**
      * Vul $domArr met DOM objecten, op basis van de URL's in $urlArr
      * @throws Exception URL array not loaded
@@ -141,8 +158,7 @@ class SanneScraper extends BaseScraper{
         //Elke iteratie is een webpage , doe rustig aan.
         foreach ($this->domArr as $dom) {
             $data = $this->buildDataArr($dom);
-            $graphService = new GraphService();
-            $graphService->buildGraph($data);
+            $this->graph->buildGraph($data);
             $this->saveDB($data);
         }
     }
