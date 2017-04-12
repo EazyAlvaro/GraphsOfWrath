@@ -4,6 +4,10 @@ parameters:
 #    parameter_name: value
 
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    sanne.graph:
+        class: SanneScraperBundle\Services\GraphService
+    
+    sanne.scraper: 
+        class:  SanneScraperBundle\Scrapers\SanneScraper
+        arguments: ['@doctrine.orm.entity_manager','@sanne.graph']
+    

@@ -3,20 +3,22 @@ namespace SanneScraperBundle\Scrapers;
 
 use SanneScraperBundle\Scrapers\BaseScraper;
 use \Exception as Exception;
-//App::import('Vendor', 'jpgraph/jpgraph');
-//App::import('Vendor', 'jpgraph/jpgraph_line');
-//use Amenadiel\JpGraph\Graph;
-//use Amenadiel\JpGraph\Plot;
-use Amenadiel\JpGraph\Graph\Graph;
-use Amenadiel\JpGraph\Plot\LinePlot;
-
+use SanneScraperBundle\Services\GraphService;
+use DOMDocument;
+use SanneScraperBundle\Entity\Statistic;
 
 class SanneScraper extends BaseScraper{ 
     private $urlArr =  array(); // URL's die uit de targetURL zijn gescraped
     private $domArr = array();  // DOM objecten die daar weer uit gescraped zijn.
     
-    function __construct() {
-       $this->setDB("localhost", "root", "1q2w", "listograb" );
+    /**
+     * Doctrine Entity managrer, the dirty way  until i refactor to clean symfony servicesj
+     * @var type 
+     */
+    private $em; // 
+    
+    function __construct($em = null) {
+       $this->em = $em;
     }
     
    
@@ -138,92 +140,70 @@ class SanneScraper extends BaseScraper{
 
         //Elke iteratie is een webpage , doe rustig aan.
         foreach ($this->domArr as $dom) {
-            $pageName = $this->determinePageName($dom);
-            $type = $this->determineType($pageName);
-
-            //Zoek of er waardes van 4 digits (een jaartal) achter staan
-            $matches = array();
-            preg_match('(\d{4})', $pageName, $matches);
-            $year = $matches[0];
-
-            //bepaal de bestandsnaam van de grafiekafbeelding
-            $filename = "img/sanne/" . $type . "_" . $year . ".png";
-
-            $ydata = $this->scrapeYData($dom);
-
-            $data = array(
-                "desc" => $pageName,
-                "url" => $filename,
-                "type" => (int) $type,
-                "year" => (int) $year,
-                "months" => $ydata
-            );
-
-            //toevoegen voor later gebruik
-            $this->resultData[] = $data;
-            
-            $this->buildGraph($data);
+            $data = $this->buildDataArr($dom);
+            $graphService = new GraphService();
+            $graphService->buildGraph($data);
             $this->saveDB($data);
         }
     }
-     
+    
+    /**
+     * 
+     * Returns an array based on the DOMDocument contents that looks like the following:
+     *  [
+     *      desc, // string. ex: "(Films 2017)" 
+     *      url , // string. asset path. ex: "img/sanne/2_2017.png" 
+     *      type, // int. '1' (Books), '2' (movies)
+     *      year, // int. 
+     *      months // array. results per month, ex: [0 => 2, 1 => 4, etc => etc]
+     * ]
+     * 
+     * @param DOMDocument $dom
+     * @return array
+     */
+    public function buildDataArr(DOMDocument $dom)
+    {
+        $pageName = $this->determinePageName($dom);
+        $type = $this->determineType($pageName);
+
+        //Zoek of er waardes van 4 digits (een jaartal) achter staan
+        $matches = array();
+        preg_match('(\d{4})', $pageName, $matches);
+        $year = $matches[0];
+
+        //bepaal de bestandsnaam van de grafiekafbeelding
+        $filename = "img/sanne/" . $type . "_" . $year . ".png";
+
+        $ydata = $this->scrapeYData($dom);
+
+        $data = array(
+            "desc" => $pageName,
+            "url" => $filename,
+            "type" => (int) $type,
+            "year" => (int) $year,
+            "months" => $ydata
+        );
+        
+        return $data;
+    }
+
     /** 
+     * Persist the data to the DB
      * 
      * @param array $data Array met [desc (grafiektitel),url (doelbestand), type(1=boeken,2=film), year, months (grafiekgegevens per maand)] 
      */
     private function saveDB($data) {
+        $statistic = new Statistic();
         
-        if($this->i->connect_errno) {
-            throw new Exception("Failed to connect to mysqli");
-        }
-            
-        $query = 'INSERT INTO stats (`desc`, `url`, `type`, `year`) VALUES ( ?  , ? , ? , ?) ';
-        $statement = $this->i->stmt_init();
+        $statistic->setDesc($data['desc'])
+                ->setType($data['type'])
+                ->setUrl($data['url'])
+                ->setYear($data['year']);
         
-        if ($statement->prepare($query)) {
-            
-           $statement->bind_param(
-                    'ssii', 
-                    $data['desc'], //string 
-                    $data['url'],  //string
-                    $data['type'], //int
-                    $data['year'] //int
-            );
-            
-            $feedback = $statement->execute();  
-            if(!$feedback) {
-                echo  mysqli_error($this->i);
-                throw new Exception("Failed to insert record");
-            } else {
-                echo $data['desc']." Saved in DB<br>";
-            }
-        } else {
-           echo mysqli_error($this->i);
-        }
-       echo  mysqli_error($this->i);       
+        $this->em->persist($statistic);
+        
+        $this->em->flush();
     }
-    
-    /**
-     * Maakt een lijngrafiek van $resultData en slaat deze op 
-     * @param array $data Array met [desc (grafiektitel),url (doelbestand), type(1=boeken,2=film), year, months (grafiekgegevens per maand)]
-     * @param double $zoom vergrotingsfactor voor het formaat van de afbeeldingen
-     */
-    private function buildGraph($data = null, $zoom = 1) {
-        $graph = new Graph($zoom*350, $zoom*250);    
-        $graph->SetScale("textlin");
-        $graph->img->SetMargin(30,30,30,60);
-        $graph->xaxis->SetFont(FF_FONT1,FS_BOLD);
-        $graph->title->Set($data["desc"]);
-         
-        $lineplot = new LinePlot($data["months"]);
-        $lineplot->SetColor("blue");
-        $lineplot->SetWeight(5);
-            
-        //Sla de afbeelding op
-        $graph->Add($lineplot);
-        $graph->Stroke(_IMG_HANDLER);
-        $graph->img->Headers();
-        $graph->img->Stream($data["url"]);
-    }   
+ 
 }
 

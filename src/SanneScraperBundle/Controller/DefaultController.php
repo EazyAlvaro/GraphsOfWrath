@@ -22,9 +22,12 @@ class DefaultController extends Controller {
     public function generateAction()
     {
         $url = "http://listography.com/2271185865";
-
-        $scraper = new SanneScraper();
-        $scraper->flush();
+        $em = $this->getDoctrine()->getManager();
+        
+        // clean out the old data before crawling
+        $em->createQuery('DELETE FROM SanneScraperBundle:Statistic')->execute();
+                
+        $scraper = new SanneScraper($em);
         $scraper->setURL($url);
         $scraper->load();
         $scraper->start();

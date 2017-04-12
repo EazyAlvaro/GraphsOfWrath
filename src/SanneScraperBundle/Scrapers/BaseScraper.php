@@ -56,18 +56,6 @@ class BaseScraper {
         return $output;
     }
     
-    /**
-     * Leeg de Database 
-     * @throws Exception Failed to truncate table
-     */
-    public function flush() {
-        if ($this->i->query("TRUNCATE TABLE `stats` ")===TRUE) {
-            
-        } else {
-            //throw new Exception("Failed to truncate table");
-        }
-    }
-            
     /** 
      * vraag het DOM Object op
      * @throws Exception "DOM not loaded"
@@ -120,18 +108,6 @@ class BaseScraper {
     }
     
     /**
-     * Maakt het locale mysqli object aan
-     * @param type $host
-     * @param type $username
-     * @param type $password
-     * @param type $database
-     * @todo error handling
-     */
-    protected function setDB($host= ' localhost', $username = 'root', $password = null, $database = 'stats') {  
-        $this->i = new mysqli($host, $username, $password, $database );
-    }
-    
-    /**
      * Start het proces van url's scrapen, daar DOM objecten van maken, DB vullen en afbeeldingen genereren. 
      */
     public function start() {
@@ -139,8 +115,6 @@ class BaseScraper {
         $this->buildUrlArr();
         //ga alle pagina's door voor hun DOM Objecten
         $this->buildDomArr();
-        //leeg de database
-        $this->flush();
         //en sla ze op in de database + afbeeldingen maken
         $this->save();
     }

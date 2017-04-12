@@ -22,7 +22,7 @@ class Statistic
     
     
     /**
-     * @ORM\Column(type="string", length=45)
+     * @ORM\Column(name="`desc`", type="string", length=45)
      */
     private $desc;
     
@@ -33,13 +33,13 @@ class Statistic
     
     
     /**
-     * @ORM\Column(type="integer", length=11)
+     * @ORM\Column(name="`type`", type="integer", length=11)
      */
     private $type;
     
     
     /**
-     * @ORM\Column(type="integer", length=11)
+     * @ORM\Column(name="`year`", type="integer", length=11)
      * @var int 
      */
     private $year;
