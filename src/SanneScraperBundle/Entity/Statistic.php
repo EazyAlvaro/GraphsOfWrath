@@ -4,50 +4,60 @@ namespace SanneScraperBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-
 /**
  * @ORM\Entity
  * @ORM\Table(name="stats")
  * @ORM\Entity(repositoryClass="SanneScraperBundle\Repository\StatisticRepository")
  */
-class Statistic
-{
-    
+class Statistic {
+
     /**
      * @ORM\Column(type="integer", length=45)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    
-    
+
     /**
      * @ORM\Column(name="`desc`", type="string", length=45)
      */
     private $desc;
-    
+
     /**
      * @ORM\Column(type="string", length=45)
      */
     private $url;
-    
-    
+
     /**
      * @ORM\Column(name="`type`", type="integer", length=11)
      */
     private $type;
-    
-    
+
     /**
      * @ORM\Column(name="`year`", type="integer", length=11)
      * @var int 
      */
     private $year;
-    
+
     /*
      * Reminder to self, the actual statistics per month are NOT saved, they go straight into the image
      */
-    
+
+    /**
+     * @ORM\Column(name="`data`", type="string")
+     * @var string
+     */
+    private $data;
+
+    public function getData()
+    {
+        return $data;
+    }
+
+    public function setData($data)
+    {
+        $this->data = $data;
+    }
 
     /**
      * Get id
@@ -154,4 +164,5 @@ class Statistic
     {
         return $this->year;
     }
+
 }

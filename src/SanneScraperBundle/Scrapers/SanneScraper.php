@@ -214,7 +214,9 @@ class SanneScraper extends BaseScraper{
         $statistic->setDesc($data['desc'])
                 ->setType($data['type'])
                 ->setUrl($data['url'])
-                ->setYear($data['year']);
+                ->setYear($data['year'])
+                ->setData( json_encode($data['months']))
+        ;
         
         $this->em->persist($statistic);
         

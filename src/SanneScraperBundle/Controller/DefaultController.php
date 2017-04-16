@@ -25,7 +25,8 @@ class DefaultController extends Controller {
         
         // clean out the old data before crawling
         $em->createQuery('DELETE FROM SanneScraperBundle:Statistic')->execute();
-                
+          
+        /** @var $scraper SanneScraperBundle/Scrapers/SanneScraper $scraper */
         $scraper = $this->get('sanne.scraper');
         $scraper->setURL($url);
         $scraper->load();
