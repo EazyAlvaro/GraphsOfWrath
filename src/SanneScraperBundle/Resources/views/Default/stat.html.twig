@@ -1,0 +1,79 @@
+{% extends 'SanneScraperBundle:Default:base.html.twig'  %}
+{% block body %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Sanne's Media Consumption</h3>
+        </div>
+        <div class="panel-body">
+            
+            <style>
+                html, body {
+                    width: 100%;
+                    height: 100%;
+                    margin: 0px;
+                    border: 0px;
+                    border: 0px;
+{#                    overflow: hidden;#}
+                    //display: block;
+                }
+                
+                .boop {
+{#                    border: 5px solid black;#}
+                    width: 480px;
+                    height: 480px;
+                    margin: 5px ;
+                    padding: 5px;
+                }
+                
+              {#  canvas {
+                    width: 500px;
+                    height: 500px;
+                }#}
+            </style>
+
+            
+            
+            <div class="row"  >
+                <div class="boop" id="boop" >
+                    <canvas id="myChart" width="500" height="500"></canvas>
+                </div>
+                <script>
+                    var ctx = document.getElementById("myChart").getContext('2d');
+                    var data = {
+                        labels: ['jan', 'feb', 'march', 'april', 'may', 'june', 'july', 'aug', 'sep', 'oct', 'nov', 'dec'],
+                        datasets: [{
+                                borderWidth: 5,
+                        label: "Books ", // + {{results[1].getData()}} ,
+                                data:{{ results[1].getData() }},
+                                backgroundColor: ['rgba(0,206,209,0.8)']
+                        }, {
+                        label: ' Movies',// + {{results[0].getData()}} ,
+                                data:{{ results[0].getData() }},
+                                backgroundColor: ['rgba(205,92,92,0.8)']
+                        }
+                        ]
+                    };
+                    var chartInstance = new Chart(ctx, {
+                        type: 'line',
+                            data: data,
+                            options: {
+                                responsive: true,
+                                maintainAspectRation: false,
+                                title: {
+                                    display: true,
+                                    text: {{results[1].getYear}} ,
+                                    padding: '1',
+                                    fullWidth: true
+                                }
+                            }
+                    });
+                    
+                    
+                    
+                    
+                    
+                </script>
+            </div>
+        </div>
+    </div>
+{% endblock %}

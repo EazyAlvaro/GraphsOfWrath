@@ -47,11 +47,11 @@ class Statistic {
      * @ORM\Column(name="`data`", type="string")
      * @var string
      */
-    private $data;
+    public $data;
 
     public function getData()
     {
-        return $data;
+        return $this->data;
     }
 
     public function setData($data)

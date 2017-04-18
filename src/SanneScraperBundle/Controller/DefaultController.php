@@ -40,7 +40,13 @@ class DefaultController extends Controller {
      */
     public function testAction()
     {
-        return $this->render('SanneScraperBundle:Default:generate.html.twig');
+        $results = $this->getDoctrine()
+                ->getRepository("SanneScraperBundle:Statistic")
+                ->findByYear(2015);
+        
+        return $this->render('SanneScraperBundle:Default:stat.html.twig', array(
+            'results' => $results
+        ));
     }
 
     /**
