@@ -64,6 +64,13 @@
                                     text: {{results[1].getYear}} ,
                                     padding: '1',
                                     fullWidth: true
+                                },
+                                scales: {
+                                    yAxes: [{
+                                            ticks: {
+                                                stepSize: 1
+                                            }
+                                    }]
                                 }
                             }
                     });
