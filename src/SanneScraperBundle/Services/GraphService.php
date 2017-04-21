@@ -10,9 +10,9 @@ class GraphService
 {
     
     /**
-     * Maakt een lijngrafiek van $resultData en slaat deze op 
-     * @param array $data Array met [desc (grafiektitel),url (doelbestand), type(1=boeken,2=film), year, months (grafiekgegevens per maand)]
-     * @param double $zoom vergrotingsfactor voor het formaat van de afbeeldingen
+     * Generates a line-graph and saves it
+     * @param array $data Array with [desc (graph title),url (target file), type(1=books,2=movies), year, months (incidents per month) ]
+     * @param double $zoom image magnification factor
      */
     public function buildGraph($data = null, $zoom = 1) {
         $graph = new Graph($zoom*350, $zoom*250);    
