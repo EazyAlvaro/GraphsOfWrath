@@ -5,8 +5,8 @@ namespace SanneScraperBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
-class DefaultController extends Controller {
-
+class DefaultController extends Controller
+{
     /**
      * @Route("/")
      */
@@ -20,12 +20,12 @@ class DefaultController extends Controller {
      */
     public function generateAction()
     {
-        $url = "http://listography.com/2271185865";
+        $url = 'http://listography.com/2271185865';
         $em = $this->getDoctrine()->getManager();
-        
+
         // clean out the old data before crawling
         $em->createQuery('DELETE FROM SanneScraperBundle:Statistic')->execute();
-          
+
         /** @var $scraper SanneScraperBundle/Scrapers/SanneScraper $scraper */
         $scraper = $this->get('sanne.scraper');
         $scraper->setURL($url);
@@ -41,11 +41,11 @@ class DefaultController extends Controller {
     public function testAction()
     {
         $results = $this->getDoctrine()
-                ->getRepository("SanneScraperBundle:Statistic")
+                ->getRepository('SanneScraperBundle:Statistic')
                 ->findByYear(2012);
-        
+
         return $this->render('SanneScraperBundle:Default:stat.html.twig', array(
-            'results' => $results
+            'results' => $results,
         ));
     }
 
@@ -56,5 +56,4 @@ class DefaultController extends Controller {
     {
         return $this->render('SanneScraperBundle:Default:stats.html.twig');
     }
-
 }

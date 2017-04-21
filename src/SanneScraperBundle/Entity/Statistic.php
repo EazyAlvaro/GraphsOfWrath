@@ -9,8 +9,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="stats")
  * @ORM\Entity(repositoryClass="SanneScraperBundle\Repository\StatisticRepository")
  */
-class Statistic {
-
+class Statistic
+{
     /**
      * @ORM\Column(type="integer", length=45)
      * @ORM\Id
@@ -35,7 +35,8 @@ class Statistic {
 
     /**
      * @ORM\Column(name="`year`", type="integer", length=11)
-     * @var int 
+     *
+     * @var int
      */
     private $year;
 
@@ -45,6 +46,7 @@ class Statistic {
 
     /**
      * @ORM\Column(name="`data`", type="string")
+     *
      * @var string
      */
     public $data;
@@ -60,9 +62,9 @@ class Statistic {
     }
 
     /**
-     * Get id
+     * Get id.
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -70,7 +72,7 @@ class Statistic {
     }
 
     /**
-     * Set desc
+     * Set desc.
      *
      * @param string $desc
      *
@@ -84,7 +86,7 @@ class Statistic {
     }
 
     /**
-     * Get desc
+     * Get desc.
      *
      * @return string
      */
@@ -94,7 +96,7 @@ class Statistic {
     }
 
     /**
-     * Set url
+     * Set url.
      *
      * @param string $url
      *
@@ -108,7 +110,7 @@ class Statistic {
     }
 
     /**
-     * Get url
+     * Get url.
      *
      * @return string
      */
@@ -118,9 +120,9 @@ class Statistic {
     }
 
     /**
-     * Set type
+     * Set type.
      *
-     * @param integer $type
+     * @param int $type
      *
      * @return Statistic
      */
@@ -132,9 +134,9 @@ class Statistic {
     }
 
     /**
-     * Get type
+     * Get type.
      *
-     * @return integer
+     * @return int
      */
     public function getType()
     {
@@ -142,9 +144,9 @@ class Statistic {
     }
 
     /**
-     * Set year
+     * Set year.
      *
-     * @param integer $year
+     * @param int $year
      *
      * @return Statistic
      */
@@ -156,13 +158,12 @@ class Statistic {
     }
 
     /**
-     * Get year
+     * Get year.
      *
-     * @return integer
+     * @return int
      */
     public function getYear()
     {
         return $this->year;
     }
-
 }
