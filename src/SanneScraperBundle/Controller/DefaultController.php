@@ -42,7 +42,7 @@ class DefaultController extends Controller {
     {
         $results = $this->getDoctrine()
                 ->getRepository("SanneScraperBundle:Statistic")
-                ->findByYear(2015);
+                ->findByYear(2012);
         
         return $this->render('SanneScraperBundle:Default:stat.html.twig', array(
             'results' => $results
