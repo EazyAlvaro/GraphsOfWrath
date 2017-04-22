@@ -36,24 +36,33 @@ class DefaultController extends Controller
     }
 
     /**
+     * This is where i experiment. Subject to change at all times.
+     *
      * @route("test")
      */
     public function testAction()
     {
         $results = $this->getDoctrine()
                 ->getRepository('SanneScraperBundle:Statistic')
-                ->findByYear(2012);
+                ->findByYear(2013);
 
-        return $this->render('SanneScraperBundle:Default:stat.html.twig', array(
-            'results' => $results,
-        ));
+        return $this->render('SanneScraperBundle:Default:stat.html.twig', ['results' => $results]);
     }
 
     /**
+     * Show all pre-generated stats .png images in a single page.
+     * 
      * @Route("/stats")
      */
     public function statsAction()
     {
-        return $this->render('SanneScraperBundle:Default:stats.html.twig');
+        $query = $this->getDoctrine()
+                ->getRepository('SanneScraperBundle:Statistic')
+                ->createQueryBuilder('s')
+                ->orderBy('s.year', 'ASC')
+                ->getQuery();
+        $results = $query->getResult();
+
+        return $this->render('SanneScraperBundle:Default:stats.html.twig', ['results' => $results]);
     }
 }

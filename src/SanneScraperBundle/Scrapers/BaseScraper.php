@@ -2,20 +2,13 @@
 
 namespace SanneScraperBundle\Scrapers;
 
-use mysqli;
 use Exception;
 use DOMDocument;
 
-/**
- * @todo abstract away mysqli from this
- */
 class BaseScraper
 {
     private $targetURL; //primaire URL waar het zoeken begint
     private $pageDOM;   //DOMDocument() van de hoofdpagina
-    private $ex = 'Not Implemented.';
-    private $resultData = array(); //result of the scraper
-    public $i; // MySQLi Object
 
     /**
      * @param DOMDocument $dom        het DOM document dat we gaan doorzoeken
