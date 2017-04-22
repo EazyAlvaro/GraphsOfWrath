@@ -6,24 +6,9 @@
         </div>
         <div class="panel-body">
             <div class="row">
-                <div class="col-md-3"><img  class="img-responsive" src="img/sanne/1_2009.png"></div>
-                <div class="col-md-3"><img  class="img-responsive" src="img/sanne/2_2009.png"></div>
-                <div class="col-sm-3"><img  class="img-responsive" src="img/sanne/1_2010.png"></div>
-                <div class="col-sm-3"><img  class="img-responsive" src="img/sanne/2_2010.png"></div>
-                <div class="col-sm-3"><img  class="img-responsive" src="img/sanne/1_2011.png"></div>
-                <div class="col-sm-3"><img  class="img-responsive" src="img/sanne/2_2011.png"></div>
-                <div class="col-sm-3"><img  class="img-responsive" src="img/sanne/1_2012.png"></div>
-                <div class="col-sm-3"><img  class="img-responsive" src="img/sanne/2_2012.png"></div>
-                <div class="col-sm-3"><img  class="img-responsive" src="img/sanne/1_2013.png"></div>
-                <div class="col-sm-3"><img  class="img-responsive" src="img/sanne/2_2013.png"></div>
-                <div class="col-sm-3"><img  class="img-responsive" src="img/sanne/1_2014.png"></div>
-                <div class="col-sm-3"><img  class="img-responsive" src="img/sanne/2_2014.png"></div>
-                <div class="col-sm-3"><img  class="img-responsive" src="img/sanne/1_2015.png"></div>
-                <div class="col-sm-3"><img  class="img-responsive" src="img/sanne/2_2015.png"></div>
-                <div class="col-sm-3"><img  class="img-responsive" src="img/sanne/1_2016.png"></div>
-                <div class="col-sm-3"><img  class="img-responsive" src="img/sanne/2_2016.png"></div>
-                <div class="col-sm-3"><img  class="img-responsive" src="img/sanne/1_2017.png"></div>
-                <div class="col-sm-3"><img  class="img-responsive" src="img/sanne/2_2017.png"></div>
+            {% for stat in results %}
+                <div class="col-md-3"><img  class="img-responsive" src="{{stat.getUrl()}}"></div>
+            {% endfor %}
             </div>
         </div>
     </div>
