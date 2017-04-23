@@ -2,8 +2,9 @@
 
 namespace SanneScraperBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use SanneScraperBundle\Services\ApiService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller
 {
@@ -42,16 +43,25 @@ class DefaultController extends Controller
      */
     public function testAction()
     {
+        //TODO use dependency inj once done prototyping
+        $api = new ApiService($this->getDoctrine()->getManager());
+
+        $years = $api->getYears();
+        
         $results = $this->getDoctrine()
                 ->getRepository('SanneScraperBundle:Statistic')
-                ->findByYear(2013);
+                ->findByYear($years[0]);
 
-        return $this->render('SanneScraperBundle:Default:stat.html.twig', ['results' => $results]);
+        return $this->render('SanneScraperBundle:Default:stat.html.twig', [
+            'results' => $results,
+            'years' => $years,
+            ]
+        );
     }
 
     /**
      * Show all pre-generated stats .png images in a single page.
-     * 
+     *
      * @Route("/stats")
      */
     public function statsAction()
