@@ -13,26 +13,41 @@
                     margin: 0px;
                     border: 0px;
                     border: 0px;
-{#                    overflow: hidden;#}
-                    //display: block;
                 }
                 
                 .boop {
-{#                    border: 5px solid black;#}
-                    width: 480px;
-                    height: 480px;
+                    width: 450px;
+                    height: 450px;
                     margin: 5px ;
                     padding: 5px;
                 }
-                
-              {#  canvas {
-                    width: 500px;
-                    height: 500px;
-                }#}
             </style>
 
+            <script>
+                $.get("/sanne/get/years", function(data){
+                    //console.log(data);
+                    //TODO: populate the years list with this, for fun & foo
+                }
+                );
+                
+            </script>
             
-            
+            <div class="row">
+                <div class="col-md-3 col-sm-3 col-lg-3" >
+                    <div class="form-group" width="200px">
+                        <label for="sel1">Select list:</label>
+                        <select class="form-control" id="sel1">
+                            {% for year in years %}
+                            <option>{{year}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+                        
+            <!--
+             The idea is to separate this out as a view that gets returned on an API call  
+            -->
             <div class="row"  >
                 <div class="boop" id="boop" >
                     <canvas id="myChart" width="500" height="500"></canvas>
@@ -75,11 +90,6 @@
                                 }
                             }
                     });
-                    
-                    
-                    
-                    
-                    
                 </script>
             </div>
         </div>

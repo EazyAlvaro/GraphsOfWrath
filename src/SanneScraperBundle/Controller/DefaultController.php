@@ -8,13 +8,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller
 {
-    /**
-     * @Route("/")
-     */
-    public function indexAction()
-    {
-        return $this->render('SanneScraperBundle:Default:stats.html.twig');
-    }
 
     /**
      * @Route("/generate")
@@ -62,6 +55,7 @@ class DefaultController extends Controller
     /**
      * Show all pre-generated stats .png images in a single page.
      *
+     * @Route("/")
      * @Route("/stats")
      */
     public function statsAction()
