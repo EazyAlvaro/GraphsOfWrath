@@ -8,7 +8,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class ApiController extends Controller
 {
     /**
-     * @FIXME broken right now, dont use
+     * //FIXME broken right now, dont use.
+     *
      * @Route("/sanne/get/years")
      */
     public function getYears()

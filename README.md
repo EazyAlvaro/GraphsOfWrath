@@ -18,6 +18,10 @@ SF3 but i'll skip that habit as SF4 won' t even have an AppBundle.
 Original Comments were in Dutch, i will be rewriting this as i refactor the 
 attached code.
 
+I'm also trying to set up Codeception so i can have one system for all my tests.
+Please don' t mind the mess ... ;)
+
+
 TODO 
 ---
 
@@ -33,9 +37,9 @@ IN-PROGRESS
 ---
 
 * set up CodeCeption
-* Unit tests
+* Unit tests 
 
-PHP Modules required
+PHP Modules required (beyond SF3 requirements)
 ---
 
 * curl

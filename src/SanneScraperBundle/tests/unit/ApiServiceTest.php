@@ -2,14 +2,23 @@
 
 namespace SanneScraperBundle;
 
-use PHPUnit_Framework_TestCase;
 use SanneScraperBundle\Services\ApiService;
+use Codeception\Test\Unit;
 
-class ApiServiceTest extends PHPUnit_Framework_TestCase
+class ApiServiceTest extends Unit
 {
     public function testConstructorExpectingException()
     {
         $this->expectException(\Exception::class);
         $api = new ApiService();
+    }
+
+    public function testConstructorExpectingNoFailure()
+    {
+        //$em = $this->getModule('Doctrine2')->em;
+
+        $container = $this->getModule('Symfony')->container;
+
+        //\MyDb::createEntityManager();
     }
 }
