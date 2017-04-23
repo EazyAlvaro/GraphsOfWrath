@@ -14,7 +14,7 @@ class ApiService
     public function __construct(EntityManager $em = null)
     {
         if (!$em) {
-            throw new DBALException('Entity Manager missing');
+            throw new \Exception('Entity Manager missing');
         }
 
         $this->em = $em;
