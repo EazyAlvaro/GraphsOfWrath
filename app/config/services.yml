@@ -10,4 +10,8 @@ services:
     sanne.scraper: 
         class:  SanneScraperBundle\Scrapers\SanneScraper
         arguments: ['@doctrine.orm.entity_manager','@sanne.graph']
+        
+    sanne.api:
+        class: SanneScraperBundle\Services\ApiService
+        arguments: ['@doctrine.orm.entity_manager']
     
