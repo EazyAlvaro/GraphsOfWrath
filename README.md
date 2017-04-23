@@ -3,6 +3,8 @@
 Hobby project involving graphs, generated from a Listography.com page where my 
 girlfriend tracks her book reading and movie viewing.
 
+![screenshot](graph_bootstrap.png)
+
 It used to generate .png files with "amenadiel/jpgraph" 3.6.8, but i am now 
 reworking it to generate ChartJS images on a HTML5 canvas, because it's more 
 awesome. Much of this retooling is still ongoing.
