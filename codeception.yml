@@ -12,6 +12,7 @@ settings:
 extensions:
     enabled:
         - Codeception\Extension\RunFailed
+        - Doctrine2:
+            depends: Symfony
 include:
-    #- src/*Bundle
     - src/SanneScraperBundle
