@@ -4,8 +4,8 @@ namespace SanneScraperBundle\Services;
 
 use Doctrine\ORM\EntityManager;
 
-class ApiService {
-
+class ApiService
+{
     /**
      * @var EntityManager Doctrine Entity Manager
      */
@@ -13,10 +13,10 @@ class ApiService {
 
     public function __construct(EntityManager $em = null)
     {
-        if(!$em) {
-            throw new DBALException("Entity Manager missing");
+        if (!$em) {
+            throw new DBALException('Entity Manager missing');
         }
-        
+
         $this->em = $em;
     }
 
@@ -39,5 +39,4 @@ class ApiService {
 
         return $flatYears;
     }
-
 }

@@ -2,11 +2,12 @@
 
 namespace SanneScraperBundle\Scrapers;
 
-use Exception as Exception;
-use SanneScraperBundle\Services\GraphService;
-use DOMDocument;
-use SanneScraperBundle\Entity\Statistic;
 use Doctrine\ORM\EntityManager;
+use DOMDocument;
+use Exception as Exception;
+use InvalidArgumentException;
+use SanneScraperBundle\Entity\Statistic;
+use SanneScraperBundle\Services\GraphService;
 
 /**
  * This service crawls the target site (intende use, a specific listography page)
@@ -32,8 +33,8 @@ class SanneScraper extends BaseScraper
     /**
      * @todo look into ContainerAwareInterface and ContainerAwareTrait
      *
-     * @param \Doctrine\ORM\EntityManager $em
-     * @param GraphService                $graph
+     * @param EntityManager $em
+     * @param GraphService  $graph
      */
     public function __construct(EntityManager $em = null, GraphService $graph = null)
     {
@@ -84,28 +85,25 @@ class SanneScraper extends BaseScraper
     }
 
     /**
-     * Bepaalt het typenummer op basis van de pagina naam.
+     * EN: Determines the typenumber based on the page name parameter
+     * NL: Bepaalt het typenummer op basis van de pagina naam.
      *
-     * @param string $pageName Naam van de pagina. in een vorm zoals "(Boeken 2013)"
+     * @param string $pageName Name of the page pagina. in een vorm zoals "(Boeken 2013)"
      *
-     * @return int Het typenummer. 1 = Boeken , 2 = Films
+     * @return int The typenumber: 1 = Books , 2 = Films
+     *
+     * @fixme could be shorter
      *
      * @throws Exception
      */
-    private function determineType($pageName)
+    public function determineType($pageName)
     {
-        (int) $type = 0;
         if (preg_match('/boeken/i', $pageName)) {
-            $type = 1;
+            return 1;
         } elseif (preg_match('/films/i', $pageName)) {
-            $type = 2;
+            return 2;
         }
-
-        if ($type === 0) {
-            throw new Exception('List type not found!');
-        }
-
-        return $type;
+        throw new InvalidArgumentException('List type not found!');
     }
 
     /**

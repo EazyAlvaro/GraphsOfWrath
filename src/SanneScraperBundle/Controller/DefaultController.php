@@ -47,7 +47,7 @@ class DefaultController extends Controller
         $api = new ApiService($this->getDoctrine()->getManager());
 
         $years = $api->getYears();
-        
+
         $results = $this->getDoctrine()
                 ->getRepository('SanneScraperBundle:Statistic')
                 ->findByYear($years[0]);

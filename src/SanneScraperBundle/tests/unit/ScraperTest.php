@@ -1,13 +1,16 @@
 <?php
+
 namespace SanneScraperBundle;
 
 use SanneScraperBundle\Scrapers\SanneScraper;
-use \Exception;
 
 class ScraperTest extends \PHPUnit_Framework_TestCase
 {
     private $scraper;
-    
+
+    /**
+     * @todo eventually figure out how to do DI for this
+     */
     protected function setUp()
     {
         $this->scraper = new SanneScraper();
@@ -20,10 +23,9 @@ class ScraperTest extends \PHPUnit_Framework_TestCase
     // tests
     public function testDetermineType()
     {
-        $this->assertEquals(1, $this->scraper->determineType('/boeken/i')) ;
-        $this->assertEquals(2, $this->scraper->determineType('/films/i')) ;
-        
-        $this->expectException(\Exception::class);
-        $this->assertEquals(2, $this->scraper->determineType('/explosion/i')) ;
+        $this->assertEquals(1, $this->scraper->determineType('boeken 1234'));
+        $this->assertEquals(2, $this->scraper->determineType('films 1234'));
+        $this->expectException(\InvalidArgumentException::class);
+        $this->scraper->determineType('exception');
     }
 }

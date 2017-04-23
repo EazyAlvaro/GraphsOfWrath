@@ -18,14 +18,25 @@ SF3 but i'll skip that habit as SF4 won' t even have an AppBundle.
 Original Comments were in Dutch, i will be rewriting this as i refactor the 
 attached code.
 
-TODO (yes i could use GitHub tickets, but i dont actually expects pull requests)
+TODO 
 ---
-* Unit tests (oldfashioned SF way, or maybe CodeCeption)ss
-* Behat Tests (through selenium or maybe CodeCeption)      
+
+(Yes i could use GitHub tickets, but i don't actually expects pull requests)
+
+* Behat Tests 
 * AJAX graph selection in a one-by one interface
 * All data in dynamic overlays with dynamic line-coloring ( nice-to-have)
 * Download button for the graphs
 * fallback data views/templates for when stats data has not been generated
 
+IN-PROGRESS
+---
 
+* set up CodeCeption
+* Unit tests
 
+PHP Modules required
+---
+
+* curl
+* mbstring
