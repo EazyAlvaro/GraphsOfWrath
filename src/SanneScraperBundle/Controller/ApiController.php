@@ -2,21 +2,21 @@
 
 namespace SanneScraperBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ApiController extends Controller
 {
+    private $api;
+
     /**
-     * //FIXME broken right now, dont use.
-     *
      * @Route("/sanne/get/years")
      */
-    public function getYears()
+    public function yearsAction()
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $em->createQuery('SELECT DISTINCT year FROM SanneScraperBundle:Statistic')
-                ->getResult();
+        //TODO error handling
+        $this->api = $this->container->get('sanne.api');
+        return new JsonResponse(json_encode($this->api->getYears()));
     }
 }
