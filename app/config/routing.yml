@@ -1,0 +1,8 @@
+sanne_scraper:
+    resource: "@SanneScraperBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation

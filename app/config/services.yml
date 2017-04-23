@@ -1,0 +1,17 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/service_container.html
+parameters:
+#    parameter_name: value
+
+services:
+    sanne.graph:
+        class: SanneScraperBundle\Services\GraphService
+    
+    sanne.scraper: 
+        class:  SanneScraperBundle\Scrapers\SanneScraper
+        arguments: ['@doctrine.orm.entity_manager','@sanne.graph']
+        
+    sanne.api:
+        class: SanneScraperBundle\Services\ApiService
+        arguments: ['@doctrine.orm.entity_manager']
+    
