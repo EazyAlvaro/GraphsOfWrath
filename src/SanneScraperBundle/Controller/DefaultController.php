@@ -2,7 +2,6 @@
 
 namespace SanneScraperBundle\Controller;
 
-use SanneScraperBundle\Services\ApiService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -36,7 +35,7 @@ class DefaultController extends Controller
     public function testAction()
     {
         $api = $this->get('sanne.api');
-        
+
         $years = $api->getYears();
 
         if (empty($years)) {

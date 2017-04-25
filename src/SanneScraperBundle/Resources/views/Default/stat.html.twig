@@ -21,6 +21,9 @@
                     margin: 5px ;
                     padding: 5px;
                 }
+                
+              
+                
             </style>
 
             <script>
@@ -29,19 +32,25 @@
                     //TODO: populate the years list with this, for fun & foo
                 }
                 );
-                
+        
             </script>
             
-            <div class="row">
-                <div class="col-md-3 col-sm-3 col-lg-3" >
-                    <div class="form-group" width="200px">
-                        <label for="sel1">Select list:</label>
+            
+            <!-- todo this row should be inside a row, or a much smaller container -->
+            <div class="row" border='1'>
+                <div class="col-md-2 col-sm-3 col-xs-7 col-lg-2" >
+                    <div class="form-group" wxidth="200px">
                         <select class="form-control" id="sel1">
                             {% for year in years %}
                             <option>{{year}}</option>
                             {% endfor %}
                         </select>
                     </div>
+                </div>
+                <div class="col-md-1 col-sm-1 col-xs-4 col-lg-1" >
+                    <a id="download">
+                        <button type="button" class="btn btn-primary">Download</button>
+                    </a>
                 </div>
             </div>
                         
@@ -90,6 +99,31 @@
                                 }
                             }
                     });
+                   
+                   /**
+                    * Original canvas download snippet thanks to
+                    * Ken Fyrstenberg Nilsen
+                    * https://jsfiddle.net/AbdiasSoftware/7PRNN/
+                    */
+
+                   /**
+                    * This is the function that will take care of image extracting and
+                    * setting proper filename for the download.
+                    * IMPORTANT: Call it from within a onclick event.
+                    */
+                   function downloadCanvas(link, canvasId, filename) {
+                       link.href = document.getElementById(canvasId).toDataURL();
+                       link.download = filename;
+                   }
+
+                   /** 
+                    * The event handler for the link's onclick event. We give THIS as a
+                    * parameter (=the link element), ID of the canvas and a filename.
+                   */
+                   document.getElementById('download').addEventListener('click', function() {
+                       downloadCanvas(this, 'myChart', '{{results[1].getYear}}.png');
+                   }, false);
+                    
                 </script>
             </div>
         </div>
