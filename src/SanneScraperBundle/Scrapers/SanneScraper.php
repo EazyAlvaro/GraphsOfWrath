@@ -242,4 +242,14 @@ class SanneScraper extends BaseScraper
 
         $this->em->flush();
     }
+
+    /**
+     * Truncate the stats table.
+     */
+    public function truncate()
+    {
+        $this->em->createQuery('DELETE FROM SanneScraperBundle:Statistic')->execute();
+        //todo error handling
+        return true;
+    }
 }

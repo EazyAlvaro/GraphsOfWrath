@@ -8,7 +8,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller
 {
-
     /**
      * @Route("/generate")
      */
@@ -20,7 +19,7 @@ class DefaultController extends Controller
         // clean out the old data before crawling
         $em->createQuery('DELETE FROM SanneScraperBundle:Statistic')->execute();
 
-        /** @var $scraper SanneScraperBundle/Scrapers/SanneScraper $scraper */
+        /* @var $scraper SanneScraperBundle\Scrapers\SanneScraper */
         $scraper = $this->get('sanne.scraper');
         $scraper->setURL($url);
         $scraper->load();
@@ -36,10 +35,13 @@ class DefaultController extends Controller
      */
     public function testAction()
     {
-        //TODO use dependency inj once done prototyping
-        $api = new ApiService($this->getDoctrine()->getManager());
-
+        $api = $this->get('sanne.api');
+        
         $years = $api->getYears();
+
+        if (empty($years)) {
+            return $this->render('SanneScraperBundle:Default:nostats.html.twig');
+        }
 
         $results = $this->getDoctrine()
                 ->getRepository('SanneScraperBundle:Statistic')
@@ -67,6 +69,26 @@ class DefaultController extends Controller
                 ->getQuery();
         $results = $query->getResult();
 
+        if (empty($results)) {
+            return $this->render('SanneScraperBundle:Default:nostats.html.twig');
+        }
+
         return $this->render('SanneScraperBundle:Default:stats.html.twig', ['results' => $results]);
+    }
+
+    /**
+     * truncate the stats table.
+     *
+     * @Route("truncate")
+     *
+     * @return type
+     */
+    public function flushAction()
+    {
+        $this->api = $this->container->get('sanne.scraper');
+        //TODO error handling
+        $this->api->truncate();
+
+        return $this->render('SanneScraperBundle:Default:truncated.html.twig');
     }
 }
