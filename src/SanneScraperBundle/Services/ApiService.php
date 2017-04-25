@@ -26,7 +26,7 @@ class ApiService
     public function getYears()
     {
         $query = $this->em->createQuery(
-            'SELECT DISTINCT s.year FROM SanneScraperBundle:Statistic s ORDER BY s.year ASC'
+                'SELECT DISTINCT s.year FROM SanneScraperBundle:Statistic s ORDER BY s.year ASC'
         );
 
         $years = $query->getResult();
