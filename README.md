@@ -7,7 +7,7 @@ girlfriend tracks her book reading and movie viewing.
 
 It used to generate .png files with "amenadiel/jpgraph" 3.6.8, but i am now 
 reworking it to generate ChartJS images on a HTML5 canvas, because it's more 
-awesome. Much of this retooling is still ongoing.
+awesome. Much of this retooling is *still ongoing*.
 
 I originally wrote it CakePHP as as skill-level demo and POC in 2013, and 
 started rewriting it recently to keep my Symfony skills alive, as i started 
@@ -46,3 +46,4 @@ PHP Modules required (beyond SF3 requirements)
 
 * curl
 * mbstring
+* ext-gd 
