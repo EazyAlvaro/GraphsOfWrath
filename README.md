@@ -23,6 +23,17 @@ attached code.
 I'm also trying to set up Codeception so i can have one system for all my tests.
 Please don' t mind the mess ... ;)
 
+INSTALL
+---
+I will assume the people reviewing this will know enough about php & frameworks to install a SF3 project.
+
+* Either set up your VHOST manually or use ```bin/console server:run``` (this documentation will assume the latter)
+* Run composer update
+* ```bin/console doctrine:schema:create```
+* Create directory ```web/img/sanne/``` (and give it 775 permission)
+* Browse to http://127.0.0.1:8000/generate
+
+
 
 TODO 
 ---

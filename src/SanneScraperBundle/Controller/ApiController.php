@@ -2,12 +2,22 @@
 
 namespace SanneScraperBundle\Controller;
 
+use SanneScraperBundle\Scrapers\SanneScraper;
+use SanneScraperBundle\Services\ApiService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class ApiController
+ * @package SanneScraperBundle\Controller
+ */
 class ApiController extends Controller
 {
+    /**
+     * @var ApiService
+     */
     private $api;
 
     /**
@@ -38,13 +48,17 @@ class ApiController extends Controller
    
     /**
      * @Route("/sanne/movies/{year}")
+     *
+     * @param int $year
+     *
+     * @return JsonResponse
      */
     public function getMovieDataAction(int $year)
     {
         $this->setUp();
-        
+
         return new JsonResponse(
-                $this->api->getMovieDataByYear($year)[0]['data'] 
+            json_decode($this->api->getMovieDataByYear($year)[0]['data'])
         );
     }
     
@@ -56,7 +70,7 @@ class ApiController extends Controller
          $this->setUp();
         
         return new JsonResponse(
-                $this->api->getBookDataByYear($year)[0]['data']
+                json_decode($this->api->getBookDataByYear($year)[0]['data'])
         );
     }
     
