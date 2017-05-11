@@ -59,11 +59,30 @@ class DefaultController extends Controller
     /**
      * This is where i experiment. Subject to change at all times.
      *
+     * @route("/stats/new/all")
+     */
+    public function allNewStatsAction()
+    {
+        /* i'm just using years as a lazy check if we have ANY data */
+        $api = $this->get('sanne.api');
+        $years = $api->getYears();
+
+        if (empty($years)) {
+            return $this->render('SanneScraperBundle:Default:nostats.html.twig');
+        }
+
+        return $this->render('SanneScraperBundle:Default:allstats.html.twig');
+    }
+
+
+    /**
+     * This is where i experiment. Subject to change at all times.
+     *
      * @route("test")
      */
     public function testAction()
     {
-        return $this->render('SanneScraperBundle:Default:allstats.html.twig', []);
+        return $this->render('SanneScraperBundle:Default:allstats.html.twig');
     }
 
     /**

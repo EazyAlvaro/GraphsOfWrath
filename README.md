@@ -1,10 +1,19 @@
 # GraphsOfWrath
 
-Hobby project involving graphs, generated from a Listography.com page where my 
+Hobby project involving graphs, scraped/crawled from a Listography.com page where my 
 girlfriend tracks her book reading and movie viewing.
+
+### Single Year movies/books
 
 ![screenshot](graph_bootstrap.png)
 
+### Multi-year movies/graphs
+
+![screenshot](multigraph.png)
+
+
+History
+===
 It used to generate .png files with "amenadiel/jpgraph" 3.6.8, but i am now 
 reworking it to generate ChartJS images on a HTML5 canvas, because it's more 
 awesome. Much of this retooling is *still ongoing*.
@@ -40,17 +49,12 @@ TODO
 
 (Yes i could use GitHub tickets, but i don't actually expects pull requests)
 
-* Behat Tests 
-* "Generate" page should have a loading status/spinner
-* All data in dynamic overlays with dynamic line-coloring ( nice-to-have)
-* FOSUser account to protect generate and truncate buttons
-* Admin panel for generate & truncate
-
-IN-PROGRESS
----
-
-* set up CodeCeption
-* Unit tests 
+* Feature: overall yearly averages of books/movies
+* Bugfix:mismatch between where the old stat images are written , and where the DB thinks they are. (they are deprecated now, so i could also just remove them entirely)
+* Testing: Behat Tests 
+* Feature: "Generate" page should have a loading status/spinner
+* Feature: FOSUser account to protect generate and truncate buttons
+* Feature: Admin panel for generate & truncate
 
 PHP Modules required (beyond SF3 requirements)
 ---
