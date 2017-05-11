@@ -2,16 +2,13 @@
 
 namespace SanneScraperBundle\Controller;
 
-use SanneScraperBundle\Scrapers\SanneScraper;
 use SanneScraperBundle\Services\ApiService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class ApiController
- * @package SanneScraperBundle\Controller
+ * Class ApiController.
  */
 class ApiController extends Controller
 {
@@ -21,15 +18,14 @@ class ApiController extends Controller
     private $api;
 
     /**
-     * This exists only because you can't seem to call this->container inside 
-     * constructors
+     * This exists only because you can't seem to call this->container inside
+     * constructors.
      */
     private function setUp()
     {
         $this->api = $this->container->get('sanne.api');
     }
-    
-    
+
     /**
      * @Route("/sanne/get/years")
      *
@@ -41,11 +37,10 @@ class ApiController extends Controller
         //$this->api = $this->container->get('sanne.api');
 
         $this->setUp();
-        
+
         return new JsonResponse(json_encode($this->api->getYears()));
     }
 
-   
     /**
      * @Route("/sanne/movies/{year}")
      *
@@ -61,22 +56,35 @@ class ApiController extends Controller
             json_decode($this->api->getMovieDataByYear($year)[0]['data'])
         );
     }
-    
+
     /**
      * @Route("/sanne/books/{year}")
+     *
+     * @param int $year
+     *
+     * @return JsonResponse
      */
     public function getBookDataAction(int $year)
     {
-         $this->setUp();
-        
+        $this->setUp();
+
         return new JsonResponse(
                 json_decode($this->api->getBookDataByYear($year)[0]['data'])
         );
     }
-    
-    
-    
-    
+
+    /**
+     * @Route("/sanne/all")
+     */
+    public function getAllDataAction()
+    {
+        $this->setUp();
+
+        return new JsonResponse(
+            $this->api->getAllConfigs() // just a fake till we know the format
+        );
+    }
+
     /**
      * @Route("/sanne/flush")
      *

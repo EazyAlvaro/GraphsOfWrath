@@ -1,4 +1,4 @@
 #!/bin/bash
 clear
-./csfixer.sh
-./run_tests.sh
+bash csfixer.sh
+bash run_tests.sh

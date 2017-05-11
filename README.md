@@ -41,10 +41,10 @@ TODO
 (Yes i could use GitHub tickets, but i don't actually expects pull requests)
 
 * Behat Tests 
-* AJAX graph selection in a one-by one interface
+* "Generate" page should have a loading status/spinner
 * All data in dynamic overlays with dynamic line-coloring ( nice-to-have)
-* Download button for the graphs
-* fallback data views/templates for when stats data has not been generated
+* FOSUser account to protect generate and truncate buttons
+* Admin panel for generate & truncate
 
 IN-PROGRESS
 ---

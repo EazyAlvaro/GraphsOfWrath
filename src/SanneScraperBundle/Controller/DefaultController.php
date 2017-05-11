@@ -4,6 +4,7 @@ namespace SanneScraperBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
@@ -28,11 +29,13 @@ class DefaultController extends Controller
     }
 
     /**
-     * This is where i experiment. Subject to change at all times.
+     * @fixme uses a lazy query to get the first year, could be done cleaner
      *
-     * @route("test")
+     * @route("/stats/new")
+     *
+     * @return Response
      */
-    public function testAction()
+    public function singleStatAction()
     {
         $api = $this->get('sanne.api');
 
@@ -43,21 +46,33 @@ class DefaultController extends Controller
         }
 
         $results = $this->getDoctrine()
-                ->getRepository('SanneScraperBundle:Statistic')
-                ->findByYear($years[0]);
+            ->getRepository('SanneScraperBundle:Statistic')
+            ->findByYear($years[0]);
 
         return $this->render('SanneScraperBundle:Default:stat.html.twig', [
-            'results' => $results,
-            'years' => $years,
+                'results' => $results,
+                'years' => $years,
             ]
         );
+    }
+
+    /**
+     * This is where i experiment. Subject to change at all times.
+     *
+     * @route("test")
+     */
+    public function testAction()
+    {
+        return $this->render('SanneScraperBundle:Default:allstats.html.twig', []);
     }
 
     /**
      * Show all pre-generated stats .png images in a single page.
      *
      * @Route("/")
-     * @Route("/stats")
+     * @Route("/stats/old")
+     *
+     * @return Response
      */
     public function statsAction()
     {
@@ -80,7 +95,7 @@ class DefaultController extends Controller
      *
      * @Route("truncate")
      *
-     * @return type
+     * @return Response
      */
     public function flushAction()
     {
