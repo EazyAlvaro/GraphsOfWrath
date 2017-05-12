@@ -49,7 +49,8 @@ TODO
 
 (Yes i could use GitHub tickets, but i don't actually expects pull requests)
 
-* Feature: overall yearly averages of books/movies
+* Feature: overall yearly total of books/movies
+* Feature: overall monthly averages of books/movies
 * Bugfix:mismatch between where the old stat images are written , and where the DB thinks they are. (they are deprecated now, so i could also just remove them entirely)
 * Testing: Behat Tests 
 * Feature: "Generate" page should have a loading status/spinner

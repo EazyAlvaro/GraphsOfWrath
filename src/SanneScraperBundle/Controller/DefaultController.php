@@ -57,7 +57,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * This is where i experiment. Subject to change at all times.
+     * All years for books and movies, overlaid.
      *
      * @route("/stats/new/all")
      */
@@ -74,6 +74,15 @@ class DefaultController extends Controller
         return $this->render('SanneScraperBundle:Default:allstats.html.twig');
     }
 
+    /**
+     * All years for books and movies, overlaid.
+     *
+     * @route("/stats/new/total")
+     */
+    public function totalsAction()
+    {
+        return $this->render('SanneScraperBundle:Default:totals.html.twig');
+    }
 
     /**
      * This is where i experiment. Subject to change at all times.

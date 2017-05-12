@@ -67,15 +67,6 @@ class ApiService
         return $query->getResult();
     }
 
-    /*
-     *   {
-                borderWidth: 5,
-                label: "Books ",
-                data: bookData,
-                borderColor: ['rgba(0,206,209,1)'],
-                backgroundColor: ['rgba(0,206,209,0.5)']
-     */
-
     public function getAllConfigs()
     {
         $data = $this->getAllData();
@@ -92,18 +83,12 @@ class ApiService
 
     public function getConfig(array $record, $total, $iteration)
     {
-        $label = $this->determineType($record).' '.$record['year'];
-
-        $border = [$this->determineColor($total, $iteration, $record['type'], true)];
-
-        $background = [$this->determineColor($total, $iteration, $record['type'], false)];
-
         return [
             'borderWidth' => 5,
-            'label' => $label,
+            'label' => $this->determineType($record).' '.$record['year'],
             'data' => json_decode($record['data']),
-            'borderColor' => $border,
-            'backgroundColor' => $background,
+            'borderColor' => [$this->determineColor($total, $iteration, $record['type'], true)],
+            'backgroundColor' => [$this->determineColor($total, $iteration, $record['type'], false)],
         ];
     }
 
@@ -143,5 +128,64 @@ class ApiService
         }
 
         return "rgba($red,$green,$blue,$alpha)";
+    }
+
+    public function getYearlyTotalsConfig()
+    {
+        $books = [];
+        $movies = [];
+
+        foreach ($this->getAllData() as $record) {
+            $total = $this->getTotalFromDataString($record['data']);
+
+            switch ($record['type']) {
+                case 1:
+                    $books[] = $total;
+                    break;
+                case 2:
+                    $movies[] = $total;
+                    break;
+            }
+        }
+
+        $output = [
+            $this->getConfigForTotals($books, 1),
+            $output[] = $this->getConfigForTotals($movies, 2),
+        ];
+
+        return $output;
+    }
+
+    public function getConfigForTotals(array $totals, $type)
+    {
+        return [
+            'borderWidth' => 5,
+            'label' => $this->determineType(['type' => $type]),
+            'data' => $totals,
+            'borderColor' => [$this->determineColor(1, 1, $type, true)],
+            'backgroundColor' => [$this->determineColor(1, 1, $type, false)],
+        ];
+    }
+
+    /**
+     * @param string $jsonString JSON encoded array with ints for every month.
+     *                           example: "[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]"
+     *
+     * @return int
+     */
+    public function getTotalFromDataString(string $jsonString): int
+    {
+        if (!json_decode($jsonString)) {
+            throw new \InvalidArgumentException();
+        }
+
+        $dataArray = json_decode($jsonString);
+        $total = 0;
+
+        foreach ($dataArray as $month) {
+            $total += $month;
+        }
+
+        return $total;
     }
 }

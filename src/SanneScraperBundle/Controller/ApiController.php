@@ -33,9 +33,6 @@ class ApiController extends Controller
      */
     public function yearsAction()
     {
-        //TODO error handling
-        //$this->api = $this->container->get('sanne.api');
-
         $this->setUp();
 
         return new JsonResponse(json_encode($this->api->getYears()));
@@ -81,7 +78,21 @@ class ApiController extends Controller
         $this->setUp();
 
         return new JsonResponse(
-            $this->api->getAllConfigs() // just a fake till we know the format
+            $this->api->getAllConfigs()
+        );
+    }
+
+    /**
+     * @Route("/sanne/totals")
+     *
+     * @return JsonResponse
+     */
+    public function totalsAction()
+    {
+        $this->setUp();
+
+        return new JsonResponse(
+          $this->api->getYearlyTotalsConfig()
         );
     }
 

@@ -137,4 +137,71 @@ class ApiServiceTest extends Unit
 
         $this->assertEquals($expected, $actual);
     }
+
+    public function testGetYearlyTotalsConfig()
+    {
+        $api = $this->createMock(ApiService::class); //ApiService(($this->emMock));
+
+        $allData = [
+            [
+                'year' => 2017,
+                'type' => 1,
+                '$data' => '[1]',
+                'desc' => ' (books 2017) ',
+            ],
+        ];
+
+        $api->expects($this->once())
+            ->method('getAllData')
+            ->will($this->returnValue($allData));
+
+        $output = $api->getYearlyTotalsConfig();
+
+        $this->markTestIncomplete();
+    }
+
+    public function testGetConfigForTotals()
+    {
+        $api = new ApiService(($this->emMock));
+
+        $totals = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+
+        $expectedBooks = [
+            'borderWidth' => 5,
+            'label' => 'books',
+            'data' => $totals,
+            'borderColor' => ['rgba(0,0,255,1)'],
+            'backgroundColor' => ['rgba(0,0,255,0.4)'],
+        ];
+
+        $expectedMovies = [
+            'borderWidth' => 5,
+            'label' => 'movies',
+            'data' => $totals,
+            'borderColor' => ['rgba(255,0,0,1)'],
+            'backgroundColor' => ['rgba(255,0,0,0.4)'],
+        ];
+
+        $this->assertEquals($expectedBooks, $api->getConfigForTotals($totals, 1));
+        $this->assertEquals($expectedMovies, $api->getConfigForTotals($totals, 2));
+    }
+
+    public function testGetTotalFromDataString()
+    {
+        $api = new ApiService(($this->emMock));
+
+        $actual1 = $api->getTotalFromDataString('[1]');
+        $this->assertEquals(1, $actual1);
+
+        $actual2 = $api->getTotalFromDataString('[1,2,3]');
+        $this->assertEquals(6, $actual2);
+    }
+
+    public function testGetTotalFromDataStringExpectingInvalidArgument()
+    {
+        $api = new ApiService(($this->emMock));
+
+        $this->expectException(\InvalidArgumentException::class);
+        $api->getTotalFromDataString('yolo');
+    }
 }

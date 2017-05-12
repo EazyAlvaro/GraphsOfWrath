@@ -1,4 +1,4 @@
-var updateAllGraphs = function(dataSets, stepSize) {
+var updateTotalsGraphs = function(dataSets, labels, stepSize) {
 
     /**
      * Original canvas download snippet thanks to
@@ -24,17 +24,17 @@ var updateAllGraphs = function(dataSets, stepSize) {
         downloadCanvas(this, 'myChart', 'all.png');
     }, false);
 
+    if(labels == null) {
+        labels = [2009,2010,2011,2012,2013,2014,2015,2016,2017];
+    }
+
+
     var ctx = document.getElementById("myChart").getContext('2d');
     var data = {
-        labels: ['jan', 'feb', 'march', 'april', 'may', 'june', 'july', 'aug', 'sep', 'oct', 'nov', 'dec'],
+        labels: labels,
         datasets: dataSets
 
     };
-
-
-    if( stepSize == null){
-        stepSize = 1;
-    }
 
     var chartInstance = new Chart(ctx, {
         type: 'line',
@@ -44,7 +44,7 @@ var updateAllGraphs = function(dataSets, stepSize) {
             maintainAspectRation: false,
             title: {
                 display: true,
-                text: 'all results' ,
+                text: 'Yearly Totals' ,
                 padding: '1',
                 fullWidth: true
             },
@@ -52,7 +52,6 @@ var updateAllGraphs = function(dataSets, stepSize) {
                 yAxes: [{
                     ticks: {
                         stepSize: stepSize,
-                        /*max: 15*/
                     }
                 }]
             }
