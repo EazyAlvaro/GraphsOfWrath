@@ -59,6 +59,24 @@ class ApiService
         return $query->getResult();
     }
 
+    public function getBookData()
+    {
+        $query = $this->em->createQuery(
+            'SELECT DISTINCT s.year, s.type, s.data, s.desc FROM SanneScraperBundle:Statistic s where s.type = 1'
+        );
+
+        return $query->getResult();
+    }
+
+    public function getMovieData()
+    {
+        $query = $this->em->createQuery(
+            'SELECT DISTINCT s.year, s.type, s.data, s.desc FROM SanneScraperBundle:Statistic s where s.type = 2'
+        );
+
+        return $query->getResult();
+    }
+
     public function getAllData()
     {
         $query = $this->em->createQuery(
@@ -70,16 +88,21 @@ class ApiService
 
     public function getAllConfigs()
     {
-        $data = $this->getAllData();
         $output = [];
+
+        $this->setColoredConfigForDataSet($this->getBookData(), $output);
+        $this->setColoredConfigForDataSet($this->getMovieData(), $output);
+
+        return $output;
+    }
+
+    public function setColoredConfigForDataSet(array $data, &$output)
+    {
         $count = count($data);
         $iteration = 1;
-
         foreach ($data as $record) {
             $output[] = $this->getConfig($record, $count, $iteration++);
         }
-
-        return $output;
     }
 
     public function getConfig(array $record, $total, $iteration)

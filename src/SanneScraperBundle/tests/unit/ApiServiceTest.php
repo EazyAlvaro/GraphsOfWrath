@@ -187,6 +187,27 @@ class ApiServiceTest extends Unit
         $this->assertEquals($expectedMovies, $api->getConfigForTotals($totals, 2));
     }
 
+    public function testSetColoredConfigForDataSet()
+    {
+        $api = new ApiService(($this->emMock));
+
+        $bookData = [['year' => 2017, 'data' => '[3, 8, 8]', 'type' => 1]];
+
+        $output = [];
+
+        $expectedBooks = [
+            'borderWidth' => 5,
+            'label' => 'books 2017',
+            'data' => [3, 8, 8],
+            'borderColor' => ['rgba(0,0,255,1)'],
+            'backgroundColor' => ['rgba(0,0,255,0.4)'],
+        ];
+
+        $api->setColoredConfigForDataSet($bookData, $output);
+
+        $this->assertEquals($expectedBooks, $output[0]);
+    }
+
     public function testGetTotalFromDataString()
     {
         $api = new ApiService(($this->emMock));

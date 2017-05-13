@@ -56,7 +56,6 @@ TODO
 
 (Yes i could use GitHub tickets, but i don't actually expects pull requests)
 
-* Improvement: color range of blue in yearly totals is currently on the dark side
 * Feature: make inherited templates out of all the shared parts of current graph templates
 * Feature: make more re-usable version of the current update*.js files
 * Testing: Behat Tests 
