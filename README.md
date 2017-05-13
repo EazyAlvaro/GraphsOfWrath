@@ -15,6 +15,10 @@ girlfriend tracks her book reading and movie viewing.
 
 ![screenshot](totals.png)
 
+### Monthly averages
+
+![screenshot](averages.png)
+
 History
 ===
 It used to generate .png files with "amenadiel/jpgraph" 3.6.8, but i am now 
@@ -52,8 +56,9 @@ TODO
 
 (Yes i could use GitHub tickets, but i don't actually expects pull requests)
 
-* Feature: overall monthly averages of books/movies
-* Bugfix: mismatch between where the old stat images are written , and where the DB thinks they are. (they are deprecated now, so i could also just remove them entirely)
+* Improvement: color range of blue in yearly totals is currently on the dark side
+* Feature: make inherited templates out of all the shared parts of current graph templates
+* Feature: make more re-usable version of the current update*.js files
 * Testing: Behat Tests 
 * Feature: "Generate" page should have a loading status/spinner
 * Feature: FOSUser account to protect generate and truncate buttons

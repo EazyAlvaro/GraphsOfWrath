@@ -97,6 +97,20 @@ class ApiController extends Controller
     }
 
     /**
+     * @Route("/sanne/averages")
+     *
+     * @return JsonResponse
+     */
+    public function averagesAction()
+    {
+        $this->setUp();
+
+        return new JsonResponse(
+            $this->api->getMonthlyAverageConfig()
+        );
+    }
+
+    /**
      * @Route("/sanne/flush")
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse

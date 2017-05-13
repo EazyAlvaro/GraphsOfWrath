@@ -3,6 +3,7 @@
 namespace SanneScraperBundle\Services;
 
 use Doctrine\ORM\EntityManager;
+use Prophecy\Exception\InvalidArgumentException;
 
 class ApiService
 {
@@ -180,12 +181,56 @@ class ApiService
         }
 
         $dataArray = json_decode($jsonString);
-        $total = 0;
 
-        foreach ($dataArray as $month) {
-            $total += $month;
+        return array_sum($dataArray);
+    }
+
+    public function getMonthlyAverageConfig()
+    {
+        $data = $this->getAllData();
+
+        $inputBooks = [];
+        $inputMovies = [];
+
+        foreach ($data as $record) {
+            $recordArray = json_decode($record['data']);
+
+            switch ($record['type']) {
+                case 1: $inputBooks[] = $recordArray; break;
+                case 2: $inputMovies[] = $recordArray; break;
+            }
         }
 
-        return $total;
+        $bookAverages = $this->determineAverages($inputBooks);
+        $moviesAverages = $this->determineAverages($inputMovies);
+        $booksConfig = $this->getConfigForTotals($bookAverages, 1);
+        $moviesConfig = $this->getConfigForTotals($moviesAverages, 2);
+
+        return [$booksConfig, $moviesConfig];
+    }
+
+    public function determineAverages(array $input): array
+    {
+        $inputCount = count($input);
+        $dataSize = count($input[0]);
+        $output = array_fill(0, $dataSize, 0);
+
+        foreach ($input as $yearData) {
+            if ($dataSize != count($yearData)) {
+                throw new InvalidArgumentException('Data size  mismatch');
+            }
+        }
+
+        foreach ($input as $yearData) {
+            for ($i = 0; $i < $dataSize; ++$i) {
+                $output[$i] += $yearData[$i];
+            }
+        }
+
+        foreach ($output as $key => $value) {
+            $output[$key] = $value / $inputCount;
+        }
+
+        return $output;
     }
 }

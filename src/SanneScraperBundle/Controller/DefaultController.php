@@ -85,6 +85,16 @@ class DefaultController extends Controller
     }
 
     /**
+     * All years for books and movies, overlaid.
+     *
+     * @route("/stats/new/averages")
+     */
+    public function averagesAction()
+    {
+        return $this->render('SanneScraperBundle:Default:averages.html.twig');
+    }
+
+    /**
      * This is where i experiment. Subject to change at all times.
      *
      * @route("test")

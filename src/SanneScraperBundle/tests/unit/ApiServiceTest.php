@@ -2,6 +2,7 @@
 
 namespace SanneScraperBundle;
 
+use InvalidArgumentException;
 use SanneScraperBundle\Services\ApiService;
 use Codeception\Test\Unit;
 use Doctrine\ORM\EntityManager;
@@ -203,5 +204,80 @@ class ApiServiceTest extends Unit
 
         $this->expectException(\InvalidArgumentException::class);
         $api->getTotalFromDataString('yolo');
+    }
+
+    public function testGetMonthlyAverages()
+    {
+        $resultArr = [
+            ['data' => '[3, 8, 8]', 'type' => 1],
+            ['data' => '[1, 0, 2]', 'type' => 1],
+            ['data' => '[3, 8, 8]', 'type' => 2],
+            ['data' => '[1, 0, 2]', 'type' => 2],
+        ];
+
+        $expected = [
+            [
+                'borderWidth' => 5,
+                'label' => 'books',
+                'data' => [2, 4, 5],
+                'borderColor' => ['rgba(0,0,255,1)'],
+                'backgroundColor' => ['rgba(0,0,255,0.4)'],
+            ],
+            [
+                'borderWidth' => 5,
+                'label' => 'movies',
+                'data' => [2, 4, 5],
+                'borderColor' => ['rgba(255,0,0,1)'],
+                'backgroundColor' => ['rgba(255,0,0,0.4)'],
+            ],
+        ];
+
+        $this->queryMock->expects($this->once())
+            ->method('getResult')
+            ->will($this->returnValue($resultArr));
+
+        $this->emMock->expects($this->once())
+            ->method('createQuery')
+            ->will($this->returnValue($this->queryMock));
+
+        $api = new ApiService($this->emMock);
+
+        $this->assertEquals($expected, $api->getMonthlyAverageConfig());
+    }
+
+    public function testDetermineAverages()
+    {
+        $api = new ApiService(($this->emMock));
+
+        $input = [
+          [3, 8, 8],
+          [1, 0, 2],
+        ];
+
+        $expected1 = [2, 4, 5];
+
+        $this->assertEquals($expected1, $api->determineAverages($input));
+
+        $input2 = [
+            [2, 3, 0, 6],
+            [4, 3, 6, 4],
+        ];
+
+        $expected2 = [3, 3, 3, 5];
+
+        $this->assertEquals($expected2, $api->determineAverages($input2));
+    }
+
+    public function testDetermineAveragesExpectingInvalidArgumentDueToSizeMismatch()
+    {
+        $api = new ApiService(($this->emMock));
+
+        $input = [
+            [3, 8, 8],
+            [1, 0],
+        ];
+
+        $this->expectException(InvalidArgumentException::class);
+        $api->determineAverages($input);
     }
 }

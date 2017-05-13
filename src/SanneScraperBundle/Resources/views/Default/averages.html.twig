@@ -1,0 +1,35 @@
+{% extends 'SanneScraperBundle:Default:base.html.twig' %}
+{% block body %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Sanne's Media Consumption</h3>
+        </div>
+        <div class="panel-body">
+
+            <script src="/js/updateAllGraphs.js"></script>
+
+            <div class="row">
+                <div class="col-md-1 col-sm-1 col-xs-4 col-lg-1">
+                    <a id="download">
+                        <button type="button" class="btn btn-primary">Download</button>
+                    </a>
+                </div>
+                <div class="sanvas">
+                    <canvas id="myChart" width="400" height="400"></canvas>
+                </div>
+                <script>
+                    // to trigger on pageload
+                    $(document).ready(function () {
+                        $.ajax({
+                            url: '/sanne/averages',
+                            success: function(data) {
+
+                                updateAllGraphs(data);
+                            }
+                        });
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+{% endblock %}
