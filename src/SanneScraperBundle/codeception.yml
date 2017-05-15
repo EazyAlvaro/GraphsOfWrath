@@ -13,3 +13,12 @@ settings:
 extensions:
     enabled:
         - Codeception\Extension\RunFailed
+
+coverage:
+    remote: true
+    enabled: true
+    include:
+        - src/SanneScraperBundle
+    whitelist:
+        include:
+            - /Services/*

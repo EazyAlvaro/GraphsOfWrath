@@ -36,8 +36,7 @@ SF3 but i'll skip that habit as SF4 won' t even have an AppBundle.
 Original Comments were in Dutch, i will be rewriting this as i refactor the 
 attached code.
 
-I'm also trying to set up Codeception so i can have one system for all my tests.
-Please don' t mind the mess ... ;)
+
 
 INSTALL
 ---
@@ -50,6 +49,11 @@ I will assume the people reviewing this will know enough about php & frameworks 
 * Browse to http://127.0.0.1:8000/generate
 
 
+UnitTests / CodeCeption
+---
+You will find the unittests under ```/var/www/graphs/src/SanneScraperBundle/tests/unit```
+
+The older/refactored code still needs better coverage
 
 TODO 
 ---
